@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "status": {
+      "type": "integer"
+    },
+    "traceId": {
+      "type": "string"
+    },
+    "errors": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "patternProperties": {
+        "^\\$\\.\\w+$": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "type",
+    "title",
+    "status",
+    "traceId"
+  ]
+}

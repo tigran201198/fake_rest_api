@@ -1,0 +1,55 @@
+plugins {
+    id 'java'
+    id "com.github.spacialcircumstances.gradle-cucumber-reporting" version "0.1.25"
+}
+
+group = 'net.azurewebservices.fakerestapi'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    versions = [
+            rest_assured: '5.5.2',
+            junit       : '5.12.2',
+            junit_engine: '1.12.2',
+            cucumber    : '7.22.0',
+            lombok      : '1.18.38',
+            commons_lang: '3.17.0',
+            assertj     : '3.27.3',
+            java_time   : '2.17.0',
+            owner       : '1.0.12'
+    ]
+}
+
+dependencies {
+    testImplementation(
+            "io.cucumber:cucumber-java:${versions.cucumber}",
+            "io.cucumber:cucumber-junit-platform-engine:${versions.cucumber}",
+            "io.cucumber:cucumber-picocontainer:${versions.cucumber}",
+            "io.rest-assured:json-schema-validator:${versions.rest_assured}",
+            "io.rest-assured:rest-assured:${versions.rest_assured}",
+            "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${versions.java_time}",
+            "org.aeonbits.owner:owner:${versions.owner}",
+            "org.apache.commons:commons-lang3:${versions.commons_lang}",
+            "org.assertj:assertj-core:${versions.assertj}",
+            "org.junit.jupiter:junit-jupiter:${versions.junit}",
+            "org.junit.platform:junit-platform-suite-engine:${versions.junit_engine}",
+            "org.projectlombok:lombok:${versions.lombok}"
+    )
+    testAnnotationProcessor(
+            "org.projectlombok:lombok:${versions.lombok}"
+    )
+}
+
+test {
+    useJUnitPlatform()
+}
+
+cucumberReports {
+    projectNameOverride = 'Fake REST API Test Project'
+    outputDir = file('build/cucumber-report')
+    reports = files('build/cucumber-report/json/cucumber-report.json')
+}
